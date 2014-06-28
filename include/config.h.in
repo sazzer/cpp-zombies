@@ -1,0 +1,8 @@
+#ifndef ZOMBIES_CONFIG_H
+#define ZOMBIES_CONFIG_H
+
+static const int VersionMajor = @ZOMBIES_VERSION_MAJOR@;
+static const int VersionMinor = @ZOMBIES_VERSION_MINOR@;
+static const int VersionMicro = @ZOMBIES_VERSION_MICRO@;
+
+#endif
