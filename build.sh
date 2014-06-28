@@ -30,6 +30,7 @@ if cmake $SRC_DIR; then
             if make test; then
                 CODE=0
             else
+                cat $OUT_DIR/Testing/Temporary/LastTest.log
                 CODE=4
             fi
         else
