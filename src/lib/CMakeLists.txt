@@ -7,6 +7,7 @@ ADD_LIBRARY(zombies_lib STATIC ${Sources})
 add_cppcheck(zombies_lib)
 
 INCLUDE_DIRECTORIES("${PROJECT_BINARY_DIR}")
+INCLUDE_DIRECTORIES("${PROJECT_SOURCE_DIR}")
 
 STRING(REPLACE ";" " " TestsAsString "${Tests}")
 IF (NOT "${TestsAsString}" STREQUAL "")
