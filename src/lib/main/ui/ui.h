@@ -5,33 +5,9 @@
 
 namespace UI {
   /**
-   * The actual main UI
+   * Start running the UI
    */
-  class UI {
-  public:
-    /**
-     * Construct the UI
-     */
-    UI();
-    /**
-     * Destroy the UI
-     */
-    ~UI();
-    /** The UI is not copyable */
-    UI(const UI& other) = delete;
-    /** The UI is default moveable */
-    UI(UI&& other) = default;
-    /** The UI is not copyable */
-    UI& operator=(const UI& other) = delete;
-    /** The UI is default moveable */
-    UI& operator=(UI&& other) = default;
-  protected:
-  private:
-    /** The internal implementation */
-    struct Impl;
-    /** The pImpl */
-    std::shared_ptr<Impl> pImpl;
-  };
+  void start();
 }
 
 #endif

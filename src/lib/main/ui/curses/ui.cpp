@@ -2,20 +2,30 @@
 #include <ncurses.h>
 
 namespace UI {
-  struct UI::Impl {
+  /**
+   * RAII wrapper around the Curses UI
+   */
+  class CursesUI {
+  public:
+    /**
+     * Initialize the UI
+     */
+    CursesUI() {
+      initscr();
+      raw();
+      keypad(stdscr, TRUE);
+      noecho();
+      
+    }
+    /**
+     * Destroy the UI
+     */
+    ~CursesUI() {
+      endwin();
+    }
   };
-
-  UI::UI() : pImpl(new UI::Impl) {
-    initscr();
-    raw();
-    keypad(stdscr, TRUE);
-    noecho();
-    refresh();
+  void start() {
+    CursesUI ui;
     getch();
   }
-
-  UI::~UI() {
-    endwin();
-  }
-
 }

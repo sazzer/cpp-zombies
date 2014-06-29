@@ -25,5 +25,5 @@ void setArguments(const std::vector<const char*>& args) {
  */
 void start() {
   std::cerr << "Starting" << std::endl;
-  UI::UI ui;
+  UI::start();;
 }
