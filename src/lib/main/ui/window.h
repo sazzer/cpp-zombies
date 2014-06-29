@@ -12,7 +12,10 @@ namespace UI {
     /**
      * Default constructor
      */
-    Window();
+    Window(const std::string& title, const unsigned int width, const unsigned int height) :
+      title_(title),
+      width_(width),
+      height_(height) {}
     /**
      * Virtual destructor
      */
@@ -25,6 +28,28 @@ namespace UI {
     Window& operator=(const Window& other) = delete;
     /** Non-moveable */
     Window& operator=(Window&& other) = delete;
+
+    /**
+     * Get the title of the window
+     * @return the title
+     */
+    const std::string& title() const {
+      return title_;
+    }
+    /**
+     * Get the width of the window
+     * @return the width
+     */
+    const unsigned int& width() const {
+      return width_;
+    }
+    /**
+     * Get the height of the window
+     * @return the height
+     */
+    const unsigned int& height() const {
+      return height_;
+    }
   private:
     /** The title of the window */
     std::string title_;
