@@ -1,4 +1,5 @@
 #include "main.h"
+#include "ui/ui.h"
 #include <iostream>
 
 /**
@@ -24,4 +25,5 @@ void setArguments(const std::vector<const char*>& args) {
  */
 void start() {
   std::cerr << "Starting" << std::endl;
+  UI::UI ui;
 }
