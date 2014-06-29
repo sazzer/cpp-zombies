@@ -18,7 +18,8 @@ namespace UI {
 	raw();
 	keypad(stdscr, TRUE);
 	noecho();      
-	
+	curs_set(0);
+
 	mapWindow_.reset(new UI::Curses::Window("Zombies RL", COLS, LINES));
       }
       /**
@@ -37,6 +38,8 @@ namespace UI {
    */
   void start() {
     UI::Curses::CursesUI ui;
+    doupdate();
+    refresh();
     getch();
   }
 }

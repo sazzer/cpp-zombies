@@ -2,6 +2,7 @@
 #define ZOMBIES_UI_CURSES_WINDOW_H
 
 #include "ui/window.h"
+#include <ncurses.h>
 
 namespace UI {
   namespace Curses {
@@ -13,12 +14,12 @@ namespace UI {
       /**
        * Default constructor
        */
-      Window(const std::string& title, const unsigned int width, const unsigned int height) : 
-        UI::Window(title, width, height) {}
+      Window(const std::string& title, const unsigned int width, const unsigned int height);
       /**
        * Virtual destructor
        */
-      virtual ~Window() {};
+      virtual ~Window();
+      
       /** Non-copyable */
       Window(const Window& other) = delete;
       /** Non-moveable */
@@ -27,7 +28,9 @@ namespace UI {
       Window& operator=(const Window& other) = delete;
       /** Non-moveable */
       Window& operator=(Window&& other) = delete;
-      
+    private:
+      /** The actual window */
+      WINDOW* win_;
     };
   }
 }
