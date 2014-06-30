@@ -6,7 +6,7 @@ popd > /dev/null
 
 OUT_DIR=$1
 if [ -z "$OUT_DIR" ]; then
-    OUT_DIR=`mktemp -d`
+    OUT_DIR=`mktemp -d -t build`
     CLEANUP=yes
 else
     mkdir -p $OUT_DIR
