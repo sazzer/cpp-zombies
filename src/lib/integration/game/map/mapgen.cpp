@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 #include "game/map/mapgen.h"
 #include <png.h>
 
