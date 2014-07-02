@@ -2,6 +2,7 @@ PROJECT (ZOMBIES_LIB)
 
 FILE(GLOB_RECURSE Sources "main/*.cpp")
 FILE(GLOB_RECURSE Tests "test/*.cpp")
+FILE(GLOB_RECURSE Integrations "integration/*.cpp")
 
 ADD_LIBRARY(zombies_lib STATIC ${Sources})
 add_cppcheck(zombies_lib)
@@ -22,4 +23,13 @@ IF (NOT "${TestsAsString}" STREQUAL "")
 
     ENABLE_TESTING()
     ADD_TEST(ZOMBIES_LIB lib_test)
+ENDIF()
+
+STRING(REPLACE ";" " " IntegrationsAsString "${Integrations}")
+IF (NOT "${IntegrationsAsString}" STREQUAL "")
+    FOREACH(file ${Integrations})
+        GET_FILENAME_COMPONENT(integration "${file}" NAME_WE)
+        ADD_EXECUTABLE(lib_integration_${integration} ${file})
+        TARGET_LINK_LIBRARIES(lib_integration_${integration} zombies_lib)
+    ENDFOREACH()
 ENDIF()
