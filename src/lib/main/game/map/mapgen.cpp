@@ -6,14 +6,14 @@ namespace Game {
     namespace Map {
         /**
          * Generate a new map
-         * @param name The name of the map
-         * @param width The width of the map
-         * @param height The height of the map
+         * @param map The map to populate
          */
-        void generate(const std::string name, 
-            const unsigned int width, 
-            const unsigned int height) {
-            std::vector<MapElement> mapElements(width * height);
+        void generate(Map& map) {
+            for (unsigned int w = 0; w < map.width(); ++w) {
+                for (unsigned int h = 0; h < map.width(); ++h) {
+                    map.getAt(w, h).height = 0;
+                }
+            }
         }
     }
 }
