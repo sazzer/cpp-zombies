@@ -9,7 +9,7 @@ namespace Game {
         /** An element in the map */
         struct MapElement {
             /** The height of the element */
-            unsigned char height;
+            unsigned char height = 0;
         };
 
         /**
