@@ -1,4 +1,5 @@
 #include "game/map/map.h"
+#include <iostream>
 
 namespace Game {
     namespace Map {
@@ -10,6 +11,7 @@ namespace Game {
          */
         Map::Map(const std::string& name, const unsigned int width, const unsigned int height) : name_(name), width_(width), height_(height) {
             elements_.resize(width * height);
+            std::cerr << "Elements: " << (width * height) << std::endl;
         }
         /**
          * Get the map element at the given offset
@@ -18,7 +20,9 @@ namespace Game {
          * @return the Map Element
          */
         const MapElement& Map::getAt(const unsigned int x, const unsigned int y) const {
-            return elements_[(x * width_) + y];
+            unsigned long offset = (x * height_) + y;
+            //std::cerr << "c(" << x << ", " << y << ") => " << offset << std::endl;
+            return elements_[offset];
         }
         /**
          * Get the map element at the given offset
@@ -27,7 +31,9 @@ namespace Game {
          * @return the Map Element
          */
         MapElement& Map::getAt(const unsigned int x, const unsigned int y) {
-            return elements_[(x * width_) + y];
+            unsigned long offset = (x * height_) + y;
+            //std::cerr << "m(" << x << ", " << y << ") => " << offset << std::endl;
+            return elements_[offset];
         }
     }
 }
