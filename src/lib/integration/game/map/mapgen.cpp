@@ -59,6 +59,7 @@ void mapwriter(const Game::Map::Map& map, const std::string filename) {
 int main(void) {
     std::cerr << "Map Generation Test" << std::endl;
     Game::Map::Map map("Test", 10000, 10000);
-    Game::Map::generate(map);
+    Game::Map::MapGenerator mapGenerator;
+    mapGenerator.generate(map);
     mapwriter(map, "/tmp/map.png");
 }

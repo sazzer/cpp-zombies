@@ -6,10 +6,16 @@
 namespace Game {
     namespace Map {
         /**
-         * Generate a new map
-         * @param map The map to populate
+         * Mechanism to generate a map
          */
-        void generate(Map& map);
+        class MapGenerator {
+        public:
+            /**
+             * Generate a new map
+             * @param map The map to populate
+             */
+            void generate(Map& map);
+        };
     }
 }
 
