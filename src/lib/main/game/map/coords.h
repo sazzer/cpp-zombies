@@ -53,6 +53,14 @@ namespace Game {
                 Coords plus(unsigned int dx, unsigned int dy) const {
                     return Coords(x_ + dx, y_ + dy);
                 }
+                /**
+                 * Comparison operator for Coords
+                 * @param other The second object to compare
+                 * @return True if the objects are the same
+                 */
+                bool operator==(const Coords& other) {
+                    return (x_ == other.x_) && (y_ == other.y_);
+                }
             private:
                 /** The X-Ordinate */
                 unsigned int x_;

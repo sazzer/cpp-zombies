@@ -6,13 +6,33 @@
 
 namespace Game {
     namespace Map {
+        /**
+         * A region of a map
+         */
         class Region {
             public:
+                /**
+                 * Construct the region from the raw coordinates
+                 * @param x1 One of the X coordinates
+                 * @param y1 One of the Y coordinates
+                 * @param x2 The other one of the X coordinates
+                 * @param y2 The other one of the Y coordinates
+                 */
                 Region(const unsigned int x1, const unsigned int y1, const unsigned int x2, const unsigned int y2) : 
                     top_(std::min(y1, y2)),
                     bottom_(std::max(y1, y2)),
                     left_(std::min(x1, x2)),
                     right_(std::max(x1, x2)) {}
+                /**
+                 * Construct the region from coordinates
+                 * @param tl The top left coordinate
+                 * @param bl The bottom right coordinate
+                 */
+                Region(const Coords& tl, const Coords& br) : 
+                    top_(std::min(tl.y(), br.y())),
+                    bottom_(std::max(tl.y(), br.y())),
+                    left_(std::min(tl.x(), br.x())),
+                    right_(std::max(tl.x(), br.x())) {}
                 /**
                  * Get the top of the region
                  * @return the top
@@ -117,6 +137,17 @@ namespace Game {
                  */
                 Coords middle() const {
                     return Coords(midX(), midY());
+                }
+                /**
+                 * Comparison operator for Region
+                 * @param other The second object to compare
+                 * @return True if the objects are the same
+                 */
+                bool operator==(const Region& other) {
+                    return (top_ == other.top_) &&
+                        (bottom_ == other.bottom_) &&
+                        (left_ == other.left_) &&
+                        (right_ == other.right_);
                 }
             private:
                 /** The top of the region */
