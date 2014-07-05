@@ -3,6 +3,7 @@
 
 #include "game/map/coords.h"
 #include <cmath>
+#include <ostream>
 
 namespace Game {
     namespace Map {
@@ -159,6 +160,13 @@ namespace Game {
                 /** The right of the region */
                 unsigned int right_;
         };
+        /**
+         * Output operator for regions
+         * @param stream The stream to output to
+         * @param region The region to output
+         * @param the stream for chaining
+         */
+        std::ostream& operator<<(std::ostream& stream, const Region& region);
     }
 }
 #endif

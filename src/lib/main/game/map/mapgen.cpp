@@ -15,13 +15,25 @@ namespace Game {
          * @param regions The queue of regions, where we will subdivide and return the first region on the queue
          * @return the region to work with
          */
-        Region generateRegions(std::queue<Region> regions) {
+        Region generateRegions(std::queue<Region>& regions) {
+            //std::cerr << "Regions starting with: " << regions.size() << std::endl;
             Region region = regions.front();
             regions.pop();
-            regions.push(Region(region.topLeft(), region.middle()));
-            regions.push(Region(region.topMiddle(), region.middleRight()));
-            regions.push(Region(region.middleLeft(), region.bottomMiddle()));
-            regions.push(Region(region.middle(), region.bottomRight()));
+            //std::cerr << "Subdividing region: " << region << std::endl;
+            Region r1(Region(region.topLeft(), region.middle()));
+            Region r2(Region(region.topMiddle(), region.middleRight()));
+            Region r3(Region(region.middleLeft(), region.bottomMiddle()));
+            Region r4(Region(region.middle(), region.bottomRight()));
+            /*std::cerr << "Generated regions: " 
+                << r1 << ", "
+                << r2 << ", "
+                << r3 << ", "
+                << r4 << std::endl;*/
+            regions.push(r1);
+            regions.push(r2);
+            regions.push(r3);
+            regions.push(r4);
+            //std::cerr << "Regions left: " << regions.size() << std::endl;
             return region;
         }
         /**
@@ -30,6 +42,7 @@ namespace Game {
          * @param region The region to work with
          */
         void seedCells(Map& map, const Region& region) {
+            std::cerr << "Seeding region: " << region << std::endl;
             map.getAt(region.topLeft()).height = 100;
             map.getAt(region.bottomLeft()).height = 100;
             map.getAt(region.topRight()).height = 100;
@@ -44,6 +57,7 @@ namespace Game {
          */
         template <typename RNG>
         void generateCells(Map& map, const Region& region, RNG& rng) {
+            //std::cerr << "Generating region: " << region << std::endl;
             if (region.topLeft() == region.bottomRight()) {
                 return;
             }
@@ -83,7 +97,8 @@ namespace Game {
             std::queue<Region> workQueue;
             workQueue.push(Region(0, 0, map.width(), map.height()));
             seedCells(map, generateRegions(workQueue));
-            while (!workQueue.empty()) {
+            unsigned int iterations = 10000000;
+            while (!workQueue.empty() && (--iterations > 1)) {
                 generateCells(map, generateRegions(workQueue), e);
             }
         }
