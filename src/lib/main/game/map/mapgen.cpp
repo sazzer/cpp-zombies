@@ -20,7 +20,7 @@ namespace Game {
             // Set the initial values
             for (unsigned int x = 0; x < map.width(); x += widthDivision) {
                 for (unsigned int y = 0; y < map.height(); y += heightDivision) {
-                    MapElement& elem = map.getAt(x, y);
+                    MapElement& elem = map.getAt({x, y});
                     elem.height = std::uniform_int_distribution<unsigned int>(100, 200)(e);
                     std::cerr << "(" << x << ", " << y << ") = " << (unsigned int)(elem.height) << std::endl;
                 }
@@ -37,17 +37,17 @@ namespace Game {
                         unsigned int midY = y + (heightDivision / 2);
 //                        std::cerr << "(" << x << ", " << y << ") -> (" << farX << ", " << farY << ")" << std::endl;
 
-                        MapElement& tl = map.getAt(x, y);
-                        MapElement& tm = map.getAt(midX, y);
-                        MapElement& tr = map.getAt(farX, y);
+                        MapElement& tl = map.getAt({x, y});
+                        MapElement& tm = map.getAt({midX, y});
+                        MapElement& tr = map.getAt({farX, y});
 
-                        MapElement& ml = map.getAt(x, midY);
-                        MapElement& mm = map.getAt(midX, midY);
-                        MapElement& mr = map.getAt(farX, midY);
+                        MapElement& ml = map.getAt({x, midY});
+                        MapElement& mm = map.getAt({midX, midY});
+                        MapElement& mr = map.getAt({farX, midY});
 
-                        MapElement& bl = map.getAt(x, farY);
-                        MapElement& bm = map.getAt(midX, farY);
-                        MapElement& br = map.getAt(farX, farY);
+                        MapElement& bl = map.getAt({x, farY});
+                        MapElement& bm = map.getAt({midX, farY});
+                        MapElement& br = map.getAt({farX, farY});
 
                         mm.height = (tl.height + tr.height + bl.height + br.height) / 4;
                         tm.height = (tl.height + tr.height) / 2;

@@ -45,7 +45,7 @@ void mapwriter(const Game::Map::Map& map, const std::string filename) {
     for (unsigned int y = 0; y < map.height(); ++y) {
         rows[y] = new png_byte[map.width() * 3];
         for (unsigned int x = 0; x < map.width(); ++x) {
-            const Game::Map::MapElement& element = map.getAt(x, y);
+            const Game::Map::MapElement& element = map.getAt({x, y});
 
             rows[y][(x * 3) + 0] = element.height; // R
             rows[y][(x * 3) + 1] = element.height; // G

@@ -15,23 +15,21 @@ namespace Game {
         }
         /**
          * Get the map element at the given offset
-         * @param x The X Offset
-         * @param y The Y Offset
+         * @param coords The co-ordinates of the map element
          * @return the Map Element
          */
-        const MapElement& Map::getAt(const unsigned int x, const unsigned int y) const {
-            unsigned long offset = (x * height_) + y;
+        const MapElement& Map::getAt(const Coords& coords) const {
+            unsigned long offset = (coords.x() * height_) + coords.y();
             //std::cerr << "c(" << x << ", " << y << ") => " << offset << std::endl;
             return elements_[offset];
         }
         /**
          * Get the map element at the given offset
-         * @param x The X Offset
-         * @param y The Y Offset
+         * @param coords The co-ordinates of the map element
          * @return the Map Element
          */
-        MapElement& Map::getAt(const unsigned int x, const unsigned int y) {
-            unsigned long offset = (x * height_) + y;
+        MapElement& Map::getAt(const Coords& coords) {
+            unsigned long offset = (coords.x() * height_) + coords.y();
             //std::cerr << "m(" << x << ", " << y << ") => " << offset << std::endl;
             return elements_[offset];
         }

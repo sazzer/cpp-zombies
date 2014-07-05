@@ -1,6 +1,7 @@
 #ifndef ZOMBIES_GAME_MAP_MAP_H
 #define ZOMBIES_GAME_MAP_MAP_H
 
+#include "game/map/coords.h"
 #include <string>
 #include <vector>
 
@@ -47,18 +48,16 @@ namespace Game {
             }
             /**
              * Get the map element at the given offset
-             * @param x The X Offset
-             * @param y The Y Offset
+             * @param coords The co-ordinates of the map element
              * @return the Map Element
              */
-            const MapElement& getAt(const unsigned int x, const unsigned int y) const;
+            const MapElement& getAt(const Coords& coords) const;
             /**
              * Get the map element at the given offset
-             * @param x The X Offset
-             * @param y The Y Offset
+             * @param coords The co-ordinates of the map element
              * @return the Map Element
              */
-            MapElement& getAt(const unsigned int x, const unsigned int y);
+            MapElement& getAt(const Coords& coords);
         protected:
         private:
             /** The name of the map */
