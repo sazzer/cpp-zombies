@@ -13,13 +13,12 @@ namespace Game {
 
         /**
          * Generate the next set of regions to work with
+         * @param region The region to subdivide
          * @param regions The queue of regions, where we will subdivide and return the first region on the queue
          * @return the region to work with
          */
-        Region generateRegions(std::queue<Region>& regions) {
+        Region generateRegions(const Region& region, std::queue<Region>& regions) {
             std::cerr << "Regions starting with: " << regions.size() << std::endl;
-            Region region = regions.front();
-            regions.pop();
             if (region.bottom() - region.top() > 1 && region.right() - region.left() > 1) {
                 std::cerr << "Subdividing region: " << region << std::endl;
                 std::array<Region, 4> generated = {
@@ -91,14 +90,30 @@ namespace Game {
             std::random_device rd;
             std::mt19937 e(rd());
 
-            std::queue<Region> workQueue;
             Region initial(0, 0, map.width() - 1, map.height() - 1);
             std::cerr << "Initial region: " << initial << std::endl;
+
+            std::queue<Region> workQueue;
+            std::queue<Region> seedingQueue;
+            seedingQueue.push(initial);
             workQueue.push(initial);
-            seedCells(map, initial);
-            unsigned int iterations = 100000;
-            while (!workQueue.empty() && (--iterations > 1)) {
-                generateCells(map, generateRegions(workQueue), e);
+            for (int i = 0; i < 2; ++i) {
+                while (!workQueue.empty()) {
+                    seedCells(map, workQueue.front());
+                    seedingQueue.push(workQueue.front());
+                    workQueue.pop();
+                }
+                while (!seedingQueue.empty()) {
+                    generateRegions(seedingQueue.front(), workQueue);
+                    seedingQueue.pop();
+                }
+            }
+
+
+            while (!workQueue.empty()) {
+                Region region = workQueue.front();
+                workQueue.pop();
+                generateCells(map, generateRegions(region, workQueue), e);
             }
         }
     }
