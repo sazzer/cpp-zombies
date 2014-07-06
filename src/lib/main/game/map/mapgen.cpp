@@ -95,17 +95,17 @@ namespace Game {
 
             std::queue<Region> workQueue;
             std::queue<Region> seedingQueue;
-            seedingQueue.push(initial);
             workQueue.push(initial);
             for (int i = 0; i < 2; ++i) {
                 while (!workQueue.empty()) {
-                    seedCells(map, workQueue.front());
-                    seedingQueue.push(workQueue.front());
+                    generateRegions(workQueue.front(), seedingQueue);
                     workQueue.pop();
                 }
                 while (!seedingQueue.empty()) {
-                    generateRegions(seedingQueue.front(), workQueue);
+                    const Region& next = seedingQueue.front();
+                    seedCells(map, next);
                     seedingQueue.pop();
+                    workQueue.push(next);
                 }
             }
 
