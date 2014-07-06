@@ -20,15 +20,15 @@ namespace Game {
             std::cerr << "Regions starting with: " << regions.size() << std::endl;
             Region region = regions.front();
             regions.pop();
-            std::cerr << "Subdividing region: " << region << std::endl;
-            std::array<Region, 4> generated = {
-                Region(region.topLeft(), region.middle()),
-                Region(region.topMiddle(), region.middleRight()),
-                Region(region.middleLeft(), region.bottomMiddle()),
-                Region(region.middle(), region.bottomRight())
-            };
-            for (Region& region : generated) {
-                if (region.bottom() - region.top() > 1 && region.right() - region.left() > 1) {
+            if (region.bottom() - region.top() > 1 && region.right() - region.left() > 1) {
+                std::cerr << "Subdividing region: " << region << std::endl;
+                std::array<Region, 4> generated = {
+                    Region(region.topLeft(), region.middle()),
+                    Region(region.topMiddle(), region.middleRight()),
+                    Region(region.middleLeft(), region.bottomMiddle()),
+                    Region(region.middle(), region.bottomRight())
+                };
+                for (Region& region : generated) {
                     std::cerr << "Generated region: " << region << std::endl;
                     regions.push(region);
                 }
@@ -57,7 +57,7 @@ namespace Game {
          */
         template <typename RNG>
         void generateCells(Map& map, const Region& region, RNG& rng) {
-            std::cerr << "Generating region: " << region << std::endl;
+            std::cerr << "Populating region: " << region << std::endl;
             MapElement& tl = map.getAt(region.topLeft());
             MapElement& tm = map.getAt(region.topMiddle());
             MapElement& tr = map.getAt(region.topRight());
@@ -92,8 +92,10 @@ namespace Game {
             std::mt19937 e(rd());
 
             std::queue<Region> workQueue;
-            workQueue.push(Region(0, 0, map.width(), map.height()));
-            seedCells(map, generateRegions(workQueue));
+            Region initial(0, 0, map.width() - 1, map.height() - 1);
+            std::cerr << "Initial region: " << initial << std::endl;
+            workQueue.push(initial);
+            seedCells(map, initial);
             unsigned int iterations = 100000;
             while (!workQueue.empty() && (--iterations > 1)) {
                 generateCells(map, generateRegions(workQueue), e);

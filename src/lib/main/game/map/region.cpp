@@ -9,7 +9,7 @@ namespace Game {
          * @param the stream for chaining
          */
         std::ostream& operator<<(std::ostream& stream, const Region& region) {
-            stream << "[" << region.topLeft() << "-" << region.bottomLeft() << "]";
+            stream << "[" << region.topLeft() << "-" << region.bottomRight() << "]";
             return stream;
         }
     }
