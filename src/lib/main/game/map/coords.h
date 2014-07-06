@@ -63,6 +63,14 @@ namespace Game {
                 bool operator==(const Coords& other) {
                     return (x_ == other.x_) && (y_ == other.y_);
                 }
+                /**
+                 * Comparison operator for Coords
+                 * @param other The second object to compare
+                 * @return True if the objects are the same
+                 */
+                bool operator!=(const Coords& other) {
+                    return !(*this == other);
+                }
             private:
                 /** The X-Ordinate */
                 unsigned int x_;
