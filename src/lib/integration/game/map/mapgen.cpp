@@ -47,9 +47,26 @@ void mapwriter(const Game::Map::Map& map, const std::string filename) {
         for (unsigned int x = 0; x < map.width(); ++x) {
             const Game::Map::MapElement& element = map.getAt({x, y});
 
-            rows[y][(x * 3) + 0] = element.height; // R
-            rows[y][(x * 3) + 1] = element.height; // G
-            rows[y][(x * 3) + 2] = element.height; // B
+            if (element.height < 50) {
+                // Below sea level
+                rows[y][(x * 3) + 0] = 0; // R
+                rows[y][(x * 3) + 1] = 0; // G
+                rows[y][(x * 3) + 2] = (100 - element.height) * 5; // B
+            } else if (element.height < 75) {
+                // Sand
+                rows[y][(x * 3) + 0] = (150 - element.height) * 5; // R
+                rows[y][(x * 3) + 1] = (150 - element.height) * 5; // G
+                rows[y][(x * 3) + 2] = 0; // B
+            } else if (element.height > 200) {
+                // Snow level
+                rows[y][(x * 3) + 0] = element.height; // R
+                rows[y][(x * 3) + 1] = element.height; // G
+                rows[y][(x * 3) + 2] = element.height; // B
+            } else {
+                rows[y][(x * 3) + 0] = 0; // R
+                rows[y][(x * 3) + 1] = element.height; // G
+                rows[y][(x * 3) + 2] = 0; // B
+            }
         }
     }
     png_write_image(png_ptr.get(), &(rows[0]));
@@ -58,7 +75,7 @@ void mapwriter(const Game::Map::Map& map, const std::string filename) {
 
 int main(void) {
     std::cerr << "Map Generation Test" << std::endl;
-    Game::Map::Map map("Test", 256, 256);
+    Game::Map::Map map("Test", 512, 512);
     Game::Map::MapGenerator mapGenerator;
     mapGenerator.generate(map);
     mapwriter(map, "/tmp/map.png");
