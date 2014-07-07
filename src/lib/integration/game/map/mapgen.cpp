@@ -52,7 +52,7 @@ void mapwriter(const Game::Map::Map& map, const std::string filename) {
                 rows[y][(x * 3) + 0] = 0; // R
                 rows[y][(x * 3) + 1] = 0; // G
                 rows[y][(x * 3) + 2] = (100 - element.height) * 5; // B
-            } else if (element.height < 75) {
+            } else if (element.height < 60) {
                 // Sand
                 rows[y][(x * 3) + 0] = (150 - element.height) * 5; // R
                 rows[y][(x * 3) + 1] = (150 - element.height) * 5; // G

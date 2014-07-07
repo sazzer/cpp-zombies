@@ -40,7 +40,8 @@ namespace Game {
          * @param map The map to work with
          * @param region The region to work with
          */
-        void seedCells(Map& map, const Region& region) {
+        template <typename RNG>
+        void seedCells(Map& map, const Region& region, RNG& rng) {
             std::cerr << "Seeding region: " << region << std::endl;
             std::array<Coords, 4> coords = {
                 region.topLeft(),
@@ -48,15 +49,20 @@ namespace Game {
                 region.bottomLeft(),
                 region.bottomRight()
             };
+            
+            const Region mapRegion = map.asRegion();
+            const Coords middle = mapRegion.middle();
 
             for (const Coords& c : coords) {
-                if (c.x() == 0 || 
-                    c.x() == map.width() - 1 ||
-                    c.y() == 0 ||
-                    c.y() == map.height() - 1) {
+                unsigned int x = c.x();
+                unsigned int y = c.y();
+                unsigned int dx = x < middle.x() ? x : mapRegion.right() - x;
+                unsigned int dy = y < middle.y() ? y : mapRegion.bottom() - y;
+
+                if (dx == 0 || dy == 0) {
                     map.getAt(c).height = 0;
                 } else {
-                    map.getAt(c).height = 100;
+                    map.getAt(c).height = std::uniform_int_distribution<unsigned int>(0, 200)(rng);
                 }
             }
         }
@@ -88,11 +94,12 @@ namespace Game {
             ml.height = (tl.height + bl.height) / 2;
             mr.height = (tr.height + br.height) / 2;
 
-            mm.height *= (std::uniform_real_distribution<float>(0.9, 1.1)(rng));
-            tm.height *= (std::uniform_real_distribution<float>(0.9, 1.1)(rng));
-            bm.height *= (std::uniform_real_distribution<float>(0.9, 1.1)(rng));
-            ml.height *= (std::uniform_real_distribution<float>(0.9, 1.1)(rng));
-            mr.height *= (std::uniform_real_distribution<float>(0.9, 1.1)(rng));
+            std::normal_distribution<float> heightRandom(1.0, 0.1);
+            mm.height *= (heightRandom(rng));
+            tm.height *= (heightRandom(rng));
+            bm.height *= (heightRandom(rng));
+            ml.height *= (heightRandom(rng));
+            mr.height *= (heightRandom(rng));
         }
 
         /**
@@ -103,7 +110,7 @@ namespace Game {
             std::random_device rd;
             std::mt19937 e(rd());
 
-            Region initial(0, 0, map.width() - 1, map.height() - 1);
+            Region initial = map.asRegion();
             std::cerr << "Initial region: " << initial << std::endl;
 
             std::queue<Region> workQueue;
@@ -116,7 +123,7 @@ namespace Game {
                 }
                 while (!seedingQueue.empty()) {
                     const Region& next = seedingQueue.front();
-                    seedCells(map, next);
+                    seedCells(map, next, e);
                     seedingQueue.pop();
                     workQueue.push(next);
                 }

@@ -2,6 +2,7 @@
 #define ZOMBIES_GAME_MAP_MAP_H
 
 #include "game/map/coords.h"
+#include "game/map/region.h"
 #include <string>
 #include <vector>
 
@@ -58,6 +59,13 @@ namespace Game {
              * @return the Map Element
              */
             MapElement& getAt(const Coords& coords);
+            /**
+             * Get the outline of the map as a region
+             * @return the region
+             */
+            Region asRegion() const {
+                return Region(0, 0, width_ - 1, height_ - 1);
+            }
         protected:
         private:
             /** The name of the map */
