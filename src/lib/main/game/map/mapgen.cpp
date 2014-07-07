@@ -42,10 +42,23 @@ namespace Game {
          */
         void seedCells(Map& map, const Region& region) {
             std::cerr << "Seeding region: " << region << std::endl;
-            map.getAt(region.topLeft()).height = 100;
-            map.getAt(region.bottomLeft()).height = 100;
-            map.getAt(region.topRight()).height = 100;
-            map.getAt(region.bottomRight()).height = 100;
+            std::array<Coords, 4> coords = {
+                region.topLeft(),
+                region.topRight(),
+                region.bottomLeft(),
+                region.bottomRight()
+            };
+
+            for (const Coords& c : coords) {
+                if (c.x() == 0 || 
+                    c.x() == map.width() - 1 ||
+                    c.y() == 0 ||
+                    c.y() == map.height() - 1) {
+                    map.getAt(c).height = 0;
+                } else {
+                    map.getAt(c).height = 100;
+                }
+            }
         }
 
         /**
